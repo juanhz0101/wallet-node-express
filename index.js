@@ -13,8 +13,6 @@ app.listen(3000, () => {
   console.log("El servidor está inicializado en el puerto 3000");
 });
 
-
-
 /**
  * Metodo utilizado para configurar la peticion que se ejecutara en el web service backend
  */
@@ -25,14 +23,23 @@ var prepareRequestOptions = function(route,method,params) {
   }
 
   formData = querystring.stringify(params);
+  
+  var options = {}
 
-  var options = {
-    url     : route,
-    method  : method,
-    headers : headers,
-    body    : formData
+  if (method === 'GET') {
+    var options = {
+      url     : `${route}?${formData}`,
+      method  : method,
+      headers : headers
+    }
+  }else if (method === 'POST') {
+    var options = {
+      url     : route,
+      method  : method,
+      headers : headers,
+      body    : formData
+    }
   }
-
   return options;
 };
 
@@ -66,6 +73,47 @@ app.post('/clients/create', function (req, res) {
   var options = prepareRequestOptions(
     'http://wallet.test/api/clients/create',
     'POST',
+    params
+  );
+
+  request(options, function (error, response, body) {
+    if (!error && response.statusCode == 200) {      
+      var result = JSON.parse(body);
+      var response =  prepareResponseOptions(result,200);
+      res.status(200).send(response);
+      
+    }else{
+      //Problemas de validacion
+      if (response.statusCode == 400) {   
+        var result = JSON.parse(body);
+        var response =  prepareResponseOptions(result,400);
+        res.status(400).send(response);
+      }
+      //Error de proceso
+      else if (response.statusCode == 500) { 
+        var result = JSON.parse(body);
+        var response =  prepareResponseOptions(result,500);
+        res.status(500).send(response);
+      }
+    }
+  });
+});
+
+/**
+ * Consultar saldo en la billetera
+ */
+app.get('/clients/wallet/balance', function (req, res) {
+  
+  var params = {
+    'name': req.query.name,
+    'email': req.query.email,
+    'document': req.query.document,
+    'cell_phone': req.query.cell_phone
+  };
+
+  var options = prepareRequestOptions(
+    'http://wallet.test/api/clients/wallet/balance',
+    'GET',
     params
   );
 
