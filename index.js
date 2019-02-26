@@ -108,17 +108,17 @@ app.post('/clients/create', function (req, res) {
 app.get('/clients/wallet/balance', function (req, res) {
   
   var params = {
-    'name': req.query.name,
-    'email': req.query.email,
     'document': req.query.document,
     'cell_phone': req.query.cell_phone
   };
 
   var options = prepareRequestOptions(
-    `${apiUri}/api/clients/wallet/balance`,
+    `${apiUri}/clients/wallet/balance`,
     'GET',
     params
   );
+
+  console.log(options);
 
   request(options, function (error, response, body) {
     if (!error && response.statusCode == 200) {      
