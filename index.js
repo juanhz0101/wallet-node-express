@@ -139,3 +139,83 @@ app.get('/clients/wallet/balance', function (req, res) {
     }
   });
 });
+
+/**
+ * Cargar dinero en la billetera
+ */
+app.post('/wallets/charge', function (req, res) {
+  
+  var params = {
+    'document': req.body.document,
+    'cell_phone': req.body.cell_phone,
+    'value': req.body.value,
+  };
+
+  var options = prepareRequestOptions(
+    'http://wallet.test/api/wallets/charge',
+    'POST',
+    params
+  );
+
+  request(options, function (error, response, body) {
+    if (!error && response.statusCode == 200) {      
+      var result = JSON.parse(body);
+      var response =  prepareResponseOptions(result,200);
+      res.status(200).send(response);
+      
+    }else{
+      //Problemas de validacion
+      if (response.statusCode == 400) {   
+        var result = JSON.parse(body);
+        var response =  prepareResponseOptions(result,400);
+        res.status(400).send(response);
+      }
+      //Error de proceso
+      else if (response.statusCode == 500) { 
+        var result = JSON.parse(body);
+        var response =  prepareResponseOptions(result,500);
+        res.status(500).send(response);
+      }
+    }
+  });
+});
+
+/**
+ * Solicitar pago
+ */
+app.post('/wallets/payrequest', function (req, res) {
+  
+  var params = {
+    'document': req.body.document,
+    'cell_phone': req.body.cell_phone,
+    'to_pay': req.body.to_pay,
+  };
+
+  var options = prepareRequestOptions(
+    'http://wallet.test/api/wallets/payrequest',
+    'POST',
+    params
+  );
+
+  request(options, function (error, response, body) {
+    if (!error && response.statusCode == 200) {      
+      var result = JSON.parse(body);
+      var response =  prepareResponseOptions(result,200);
+      res.status(200).send(response);
+      
+    }else{
+      //Problemas de validacion
+      if (response.statusCode == 400) {   
+        var result = JSON.parse(body);
+        var response =  prepareResponseOptions(result,400);
+        res.status(400).send(response);
+      }
+      //Error de proceso
+      else if (response.statusCode == 500) { 
+        var result = JSON.parse(body);
+        var response =  prepareResponseOptions(result,500);
+        res.status(500).send(response);
+      }
+    }
+  });
+});
