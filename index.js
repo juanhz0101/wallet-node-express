@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require('cors')
 const querystring = require('querystring');
 const request = require('request');
 const bodyParser = require('body-parser');
@@ -7,12 +8,14 @@ const bodyParser = require('body-parser');
  * Inicializacion de servicios
  */
 const app = express();
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.listen(3000, () => {
   console.log("El servidor está inicializado en el puerto 3000");
 });
 
+const apiUri = "http://wallet.test/api";
 /**
  * Metodo utilizado para configurar la peticion que se ejecutara en el web service backend
  */
@@ -71,7 +74,7 @@ app.post('/clients/create', function (req, res) {
   };
 
   var options = prepareRequestOptions(
-    'http://wallet.test/api/clients/create',
+    `${apiUri}/clients/create`,
     'POST',
     params
   );
@@ -112,7 +115,7 @@ app.get('/clients/wallet/balance', function (req, res) {
   };
 
   var options = prepareRequestOptions(
-    'http://wallet.test/api/clients/wallet/balance',
+    `${apiUri}/api/clients/wallet/balance`,
     'GET',
     params
   );
@@ -152,7 +155,7 @@ app.post('/wallets/charge', function (req, res) {
   };
 
   var options = prepareRequestOptions(
-    'http://wallet.test/api/wallets/charge',
+    `${apiUri}/api/wallets/charge`,
     'POST',
     params
   );
@@ -192,7 +195,7 @@ app.post('/wallets/payrequest', function (req, res) {
   };
 
   var options = prepareRequestOptions(
-    'http://wallet.test/api/wallets/payrequest',
+    `${apiUri}/api/wallets/payrequest`,
     'POST',
     params
   );
@@ -231,7 +234,7 @@ app.post('/wallets/paycheck', function (req, res) {
   };
 
   var options = prepareRequestOptions(
-    'http://wallet.test/api/wallets/paycheck',
+    `${apiUri}/api/wallets/paycheck`,
     'POST',
     params
   );
