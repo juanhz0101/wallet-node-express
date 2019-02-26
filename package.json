@@ -1,0 +1,26 @@
+{
+  "name": "api-wallet",
+  "version": "1.0.0",
+  "description": "api rest wallet",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juanhz02/node-rest-wallet.git"
+  },
+  "author": "juanhz02 - Juan Pablo Hurtado R",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/juanhz02/node-rest-wallet/issues"
+  },
+  "homepage": "https://github.com/juanhz02/node-rest-wallet#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "npm": "^6.8.0",
+    "querystring": "^0.2.0",
+    "request": "^2.88.0"
+  }
+}
