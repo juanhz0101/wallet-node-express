@@ -219,3 +219,42 @@ app.post('/wallets/payrequest', function (req, res) {
     }
   });
 });
+
+/**
+ * Confirmar pago
+ */
+app.post('/wallets/paycheck', function (req, res) {
+  
+  var params = {
+    'session_payment': req.body.session_payment,
+    'token_payment': req.body.token_payment
+  };
+
+  var options = prepareRequestOptions(
+    'http://wallet.test/api/wallets/paycheck',
+    'POST',
+    params
+  );
+
+  request(options, function (error, response, body) {
+    if (!error && response.statusCode == 200) {      
+      var result = JSON.parse(body);
+      var response =  prepareResponseOptions(result,200);
+      res.status(200).send(response);
+      
+    }else{
+      //Problemas de validacion
+      if (response.statusCode == 400) {   
+        var result = JSON.parse(body);
+        var response =  prepareResponseOptions(result,400);
+        res.status(400).send(response);
+      }
+      //Error de proceso
+      else if (response.statusCode == 500) { 
+        var result = JSON.parse(body);
+        var response =  prepareResponseOptions(result,500);
+        res.status(500).send(response);
+      }
+    }
+  });
+});
