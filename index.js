@@ -118,8 +118,6 @@ app.get('/clients/wallet/balance', function (req, res) {
     params
   );
 
-  console.log(options);
-
   request(options, function (error, response, body) {
     if (!error && response.statusCode == 200) {      
       var result = JSON.parse(body);
@@ -155,7 +153,7 @@ app.post('/wallets/charge', function (req, res) {
   };
 
   var options = prepareRequestOptions(
-    `${apiUri}/api/wallets/charge`,
+    `${apiUri}/wallets/charge`,
     'POST',
     params
   );
@@ -195,7 +193,7 @@ app.post('/wallets/payrequest', function (req, res) {
   };
 
   var options = prepareRequestOptions(
-    `${apiUri}/api/wallets/payrequest`,
+    `${apiUri}/wallets/payrequest`,
     'POST',
     params
   );
@@ -234,7 +232,7 @@ app.post('/wallets/paycheck', function (req, res) {
   };
 
   var options = prepareRequestOptions(
-    `${apiUri}/api/wallets/paycheck`,
+    `${apiUri}/wallets/paycheck`,
     'POST',
     params
   );
