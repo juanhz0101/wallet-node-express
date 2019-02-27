@@ -15,7 +15,9 @@ app.listen(3000, () => {
   console.log("El servidor está inicializado en el puerto 3000");
 });
 
-const apiUri = "http://wallet.test/api";
+//const apiUri = "http://wallet.test/api"; //Etorno local
+const apiUri = "http://67.207.81.224/api"; //Etorno productivo
+
 /**
  * Metodo utilizado para configurar la peticion que se ejecutara en el web service backend
  */
